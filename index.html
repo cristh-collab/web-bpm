@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPM Alimentos — Capacitación 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* --- VARIABLES Y CONFIGURACIÓN --- */
+  :root {
+    --navy: #0d2137;
+    --navy2: #132c47;
+    --green: #5bab2a;
+    --green-light: #8dd455;
+    --gold: #c9a227;
+    --white: #ffffff;
+    --text-gray: rgba(255,255,255,0.7);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Open Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+
+  /* --- UTILIDADES RESPONSIVE --- */
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: 0.7s ease-out; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* --- NAVEGACIÓN --- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(13,33,55,0.96); backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--green); height: 70px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem;
+  }
+  .nav-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; color: white; text-decoration: none; font-size: 1.2rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { color: var(--text-gray); text-decoration: none; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+  .nav-links a:hover { color: var(--green-light); }
+
+  /* --- HERO --- */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; background: radial-gradient(circle at center, #1a3f60 0%, var(--navy) 100%);
+    padding-top: 80px;
+  }
+  .hero-badge { background: rgba(91,171,42,0.2); border: 1px solid var(--green); color: var(--green-light); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; margin-bottom: 20px; font-weight: 700; }
+  .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1rem; }
+  .hero h1 span { color: var(--green-light); }
+
+  /* --- BOTONES --- */
+  .btn-primary { background: var(--green); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s; }
+  .btn-primary:hover { background: #4a8e22; transform: translateY(-3px); }
+  .btn-outline { border: 2px solid var(--green); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; display: inline-block; }
+  .btn-outline:hover { background: rgba(91,171,42,0.1); }
+
+  /* --- SECCIONES DE CONTENIDO --- */
+  section { padding: 80px 0; }
+  .section-tag { color: var(--green-light); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+  .section-title { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 2rem; }
+
+  /* --- GRID DE OBJETIVOS/CARDS --- */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .card { background: var(--navy2); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+  .card:hover { border-color: var(--green); transform: translateY(-5px); }
+  .card h3 { color: var(--green-light); margin-bottom: 15px; font-family: 'Montserrat'; }
+
+  /* --- CONTROL DE IMÁGENES (GALERÍA) --- */
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .gallery-item { 
+    height: 300px; width: 100%; border-radius: 15px; overflow: hidden; 
+    border: 2px solid rgba(91,171,42,0.2); background: #000;
+  }
+  .gallery-item img { 
+    width: 100%; height: 100%; object-fit: cover; /* Evita deformación */
+    object-position: center; transition: 0.5s; opacity: 0.8;
+  }
+  .gallery-item:hover img { opacity: 1; transform: scale(1.08); }
+
+  /* --- QUIZ INTERACTIVO --- */
+  .quiz-container { background: var(--navy2); padding: 40px; border-radius: 20px; border: 1.5px solid var(--green); max-width: 800px; margin: 0 auto; }
+  .quiz-option { 
+    display: block; width: 100%; padding: 15px; margin-bottom: 10px; 
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    color: white; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s;
+  }
+  .quiz-option:hover { background: rgba(91,171,42,0.1); border-color: var(--green); }
+
+  /* --- FORMULARIO --- */
+  .contact-form { max-width: 600px; margin: 0 auto; background: var(--navy2); padding: 30px; border-radius: 20px; border: 1px solid var(--green); }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--green-light); }
+  .form-group input, .form-group textarea { 
+    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); 
+    background: #0d2137; color: white; font-family: inherit;
+  }
+
+  /* --- FOOTER --- */
+  footer { padding: 50px 0; text-align: center; background: #071624; border-top: 1px solid rgba(255,255,255,0.1); }
+
+  /* --- RESPONSIVE MOBILE --- */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; } /* Oculto en móvil por simplicidad */
+    .hero h1 { font-size: 2.2rem; }
+    .section-title { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN -->
+  <nav>
+    <a href="#hero" class="nav-logo">BPM ALIMENTOS</a>
+    <ul class="nav-links">
+      <li><a href="#objetivos">Curso</a></li>
+      <li><a href="#legal">Normativa</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#quiz">Evaluación</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="section-inner">
+      <div class="hero-badge">PROGRAMA DE CAPACITACIÓN 2026</div>
+      <h1>Buenas Prácticas de <span>Manufactura</span></h1>
+      <p style="max-width: 700px; margin: 0 auto 2rem; color: var(--text-gray);">
+        Portal de formación técnica en higiene, inocuidad y gestión de calidad alimentaria según el Reglamento Sanitario de los Alimentos.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="#objetivos" class="btn-primary">Empezar Curso</a>
+        <a href="#contacto" class="btn-outline">Solicitar Auditoría</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- OBJETIVOS -->
+  <section id="objetivos">
+    <div class="section-inner">
+      <span class="section-tag">Aprendizaje</span>
+      <h2 class="section-title">Objetivos del <span>Programa</span></h2>
+      <div class="grid-3">
+        <div class="card reveal">
+          <h3>Higiene Personal</h3>
+          <p>Dominar las técnicas de lavado de manos y presentación personal obligatoria para manipuladores.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Inocuidad</h3>
+          <p>Prevenir la contaminación cruzada (biológica, química y física) en cada etapa del proceso.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Normativa Chilena</h3>
+          <p>Conocer y aplicar los artículos clave del Decreto 977/96 para evitar sanciones sanitarias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARCO LEGAL -->
+  <section id="legal" style="background: var(--navy2);">
+    <div class="section-inner">
+      <span class="section-tag">Marco Legal</span>
+      <h2 class="section-title">Decreto <span>977/96</span></h2>
+      <p style="margin-bottom: 2rem;">Reglamento Sanitario de los Alimentos en Chile. Artículos fundamentales:</p>
+      <div class="grid-3">
+        <div class="card reveal" style="background: var(--navy);">
+          <strong style="color:var(--gold)">Art. 38</strong>
+          <p>Condiciones estructurales y orden de los establecimientos alimentarios.</p>
+        </div>
+        <div class="card reveal" style="background: var(--navy);">
+          <strong style="color:var(--gold)">Art. 39</strong>
+          <p>Gestión y retiro diario de desechos en zonas de manipulación.</p>
+        </div>
+        <div class="card reveal" style="background: var(--navy);">
+          <strong style="color:var(--gold)">Art. 41</strong>
+          <p>Obligatoriedad de planes de limpieza y desinfección programados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA (ADMINISTRABLE) -->
+  <section id="galeria">
+    <div class="section-inner">
+      <span class="section-tag">Evidencia</span>
+      <h2 class="section-title">Gestión en <span>Terreno</span></h2>
+      <p style="margin-bottom: 2rem;">Visualiza nuestras auditorías y procesos de control de calidad.</p>
+      
+      <div class="gallery-grid">
+        <!-- El administrador debe cambiar el 'src' con fotos reales -->
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1556761175-5973cf0f32e7?auto=format&fit=crop&w=600&q=80" alt="Capacitación 1" loading="lazy">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Control de Calidad" loading="lazy">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=600&q=80" alt="Procesos BPM" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVALUACIÓN (QUIZ) -->
+  <section id="quiz" style="background: var(--navy2);">
+    <div class="section-inner">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <span class="section-tag">Validación</span>
+        <h2 class="section-title">Test de <span>Conocimientos</span></h2>
+      </div>
+
+      <div class="quiz-container reveal" id="quiz-box">
+        <div id="quiz-content">
+          <h3 id="question-text" style="margin-bottom: 1.5rem;">Cargando pregunta...</h3>
+          <div id="options-container"></div>
+        </div>
+        <div id="quiz-result" style="display:none; text-align: center;">
+          <h2 style="font-size: 3rem; color: var(--green-light);" id="score-text">0/0</h2>
+          <p id="feedback-text"></p>
+          <button class="btn-primary" onclick="location.reload()" style="margin-top: 20px;">Reiniciar Test</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECURSOS -->
+  <section id="recursos">
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Recursos <span>Descargables</span></h2>
+      <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="#" class="btn-outline">📄 Manual de Manipulación PDF</a>
+        <a href="https://www.minsal.cl" target="_blank" class="btn-outline">🔗 Web Oficial MINSAL</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" style="background: var(--navy2);">
+    <div class="section-inner">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <span class="section-tag">Asesoría</span>
+        <h2 class="section-title">¿Necesitas una <span>Capacitación?</span></h2>
+        <p>Escríbenos directamente. Responderemos a <strong>controlcalidad.bpm@gmail.com</strong></p>
+      </div>
+
+      <div class="contact-form reveal">
+        <!-- Formulario configurado con Formspree -->
+        <form action="https://formspree.io/f/xvgpgrze" method="POST">
+          <div class="form-group">
+            <label>Nombre del Contacto</label>
+            <input type="text" name="nombre" required placeholder="Ej: Juan Pérez">
+          </div>
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" name="email" required placeholder="correo@empresa.com">
+          </div>
+          <div class="form-group">
+            <label>Mensaje o Requerimiento</label>
+            <textarea name="mensaje" rows="5" required placeholder="Detalla tu consulta..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%;">Enviar Mensaje</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="section-inner">
+      <h3 style="font-family: 'Montserrat'; font-weight: 900; margin-bottom: 10px;">BPM ALIMENTOS</h3>
+      <p style="font-size: 0.9rem; color: var(--text-gray);">Zíngara Matus M. - Asesora en Gestión de Inocuidad Alimentaria</p>
+      <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.5;">© 2026 Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* --- LÓGICA DE ANIMACIÓN AL SCROLL --- */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+    /* --- LÓGICA DEL QUIZ --- */
+    const questions = [
+      {
+        q: "¿Cuándo es obligatorio lavarse las manos?",
+        options: ["Solo al llegar", "Antes de iniciar, tras ir al baño y al tocar residuos", "Solo si están sucias", "Cada 2 horas"],
+        correct: 1
+      },
+      {
+        q: "¿Qué artículo del Decreto 977 habla sobre el retiro de desechos?",
+        options: ["Artículo 10", "Artículo 39", "Artículo 50", "Artículo 5"],
+        correct: 1
+      },
+      {
+        q: "¿Se permite el uso de joyas durante la manipulación?",
+        options: ["Sí, si son pequeñas", "Solo reloj", "No, está estrictamente prohibido", "Solo aros"],
+        correct: 2
+      }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      if(currentQ < questions.length) {
+        const q = questions[currentQ];
+        document.getElementById('question-text').innerText = q.q;
+        const optionsDiv = document.getElementById('options-container');
+        optionsDiv.innerHTML = '';
+        
+        q.options.forEach((opt, index) => {
+          const btn = document.createElement('button');
+          btn.innerText = opt;
+          btn.className = 'quiz-option';
+          btn.onclick = () => checkAnswer(index);
+          optionsDiv.appendChild(btn);
+        });
+      } else {
+        showResult();
+      }
+    }
+
+    function checkAnswer(idx) {
+      if(idx === questions[currentQ].correct) score++;
+      currentQ++;
+      loadQuestion();
+    }
+
+    function showResult() {
+      document.getElementById('quiz-content').style.display = 'none';
+      const resultDiv = document.getElementById('quiz-result');
+      resultDiv.style.display = 'block';
+      document.getElementById('score-text').innerText = `${score} / ${questions.length}`;
+      document.getElementById('feedback-text').innerText = score === questions.length ? "¡Excelente! Dominas las BPM." : "Buen intento. Te recomendamos repasar la normativa.";
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
