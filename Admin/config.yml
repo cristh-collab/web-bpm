@@ -1,52 +1,18 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: main # Si tu rama principal es 'master', cambia 'main' por 'master'
 
 media_folder: "images"
 public_folder: "images"
 
 collections:
-  - name: "pagina_inicio"
-    label: "Contenido de la Web"
+  - name: "inicio"
+    label: "Página de Inicio"
     files:
       - name: "principal"
-        label: "Secciones de la Página"
+        label: "Contenido Principal"
         file: "index.html"
         fields:
-          - label: "--- SECCIÓN HERO ---"
-            name: "header_hero"
-            widget: "hidden"
-          - {label: "Título Principal", name: "titulo_h1", widget: "string"}
-          - {label: "Descripción Hero", name: "desc_hero", widget: "text"}
-
-          - label: "--- SECCIÓN GALERÍA ---"
-            name: "header_gal"
-            widget: "hidden"
-          - label: "Fotos de la Galería"
-            name: "galeria_fotos"
-            widget: "list"
-            fields:
-              - {label: "Imagen", name: "imagen", widget: "image"}
-              - {label: "Descripción Corta", name: "alt", widget: "string"}
-
-          - label: "--- SECCIÓN LEGAL (DECRETO) ---"
-            name: "header_legal"
-            widget: "hidden"
-          - label: "Artículos Legales"
-            name: "articulos_lista"
-            widget: "list"
-            fields:
-              - {label: "Número de Artículo", name: "art_num", widget: "string"}
-              - {label: "Descripción de la Ley", name: "art_text", widget: "text"}
-
-          - label: "--- CUESTIONARIO (QUIZ) ---"
-            name: "header_quiz"
-            widget: "hidden"
-          - label: "Preguntas del Examen"
-            name: "quiz_preguntas"
-            widget: "list"
-            fields:
-              - {label: "La Pregunta", name: "pregunta", widget: "string"}
-              - {label: "Opción A (Correcta)", name: "opt_a", widget: "string"}
-              - {label: "Opción B", name: "opt_b", widget: "string"}
-              - {label: "Opción C", name: "opt_c", widget: "string"}
+          - {label: "Título Principal", name: "titulo", widget: "string"}
+          - {label: "Relator", name: "relator", widget: "string"}
+          - {label: "Mensaje de Bienvenida", name: "mensaje", widget: "text"}
